@@ -248,7 +248,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            position: relative; /* Needed for positioning the new button */
+            position: relative;
         }
 
         .success-container {
@@ -261,7 +261,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
-            margin-bottom: 30px; /* Space for the new button below */
+            margin-bottom: 30px;
         }
 
         .success-title {
@@ -284,7 +284,7 @@
         }
 
         #banger-btn {
-            background-color: #ff4081; /* Hot pink */
+            background-color: #ff4081;
             color: white;
             border: none;
             padding: 18px 35px;
@@ -295,7 +295,7 @@
             transition: all 0.3s ease;
             box-shadow: 0 0 25px rgba(255, 64, 129, 0.9);
             margin-top: 20px;
-            display: none; /* Hidden by default, shown by script */
+            display: none;
             opacity: 0;
             transform: translateY(15px);
         }
@@ -315,13 +315,13 @@
             z-index: 1000;
         }
 
-        /* Page 4 - Lilies Surprise */
+        /* Page 4 - Lilies Surprise - FIXED VERSION */
         #page4 {
             display: none;
-            background-color: #000; /* Plain black background */
+            background-color: #000;
             width: 100%;
             min-height: 100vh;
-            padding: 40px 20px 0px 20px; /* Top padding only, bottom is for the image */
+            padding: 40px 20px 0px 20px;
             flex-direction: column;
             align-items: center;
             position: relative;
@@ -330,9 +330,12 @@
 
         .lily-title-container {
             text-align: center;
-            margin-bottom: 40px;
             width: 90%;
             max-width: 800px;
+            margin-bottom: 20px;
+            padding-bottom: 30px;
+            position: relative;
+            z-index: 2;
         }
 
         #lily-title-text {
@@ -343,23 +346,27 @@
             min-height: 100px;
             white-space: pre-wrap;
             overflow: hidden;
+            text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
         }
 
         .lily-image-container {
             width: 100%;
             position: absolute;
-            bottom: 0; /* Anchors the container to the bottom */
+            bottom: 0;
             left: 0;
             display: flex;
             justify-content: center;
-            align-items: flex-end; /* Aligns the image to the bottom of its container */
+            align-items: flex-end;
+            z-index: 1;
         }
 
         .lily-image {
             max-width: 100%;
-            max-height: 85vh; /* Prevents the image from getting too tall */
+            max-height: 85vh;
             width: auto;
             display: block;
+            -webkit-mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
+            mask-image: linear-gradient(to top, rgba(0,0,0,1) 60%, rgba(0,0,0,0));
         }
 
         /* Responsive adjustments */
@@ -452,12 +459,11 @@
                 muchos gracias mamacitaaaaa
             </div>
         </div>
-        <!-- NEW "BANGERRRRR" BUTTON -->
         <button id="banger-btn">ANOTHER BANGERRRRR (BIG SUPRISEEEE)</button>
         <div class="confetti" id="confetti-container"></div>
     </div>
 
-    <!-- NEW Page 4: Lilies -->
+    <!-- Page 4: Lilies -->
     <div id="page4">
         <div class="lily-title-container">
             <div id="lily-title-text"></div>
@@ -480,8 +486,8 @@
         const noBtn = document.getElementById('no-btn');
         const buttonsContainer = document.getElementById('buttons-container');
         const confettiContainer = document.getElementById('confetti-container');
-        const bangerBtn = document.getElementById('banger-btn'); // New button
-        const lilyTitleText = document.getElementById('lily-title-text'); // Lily page title
+        const bangerBtn = document.getElementById('banger-btn');
+        const lilyTitleText = document.getElementById('lily-title-text');
         
         // Terminal message
         const message = "Hey Queen...\n\nDo you know what today is?";
@@ -514,10 +520,9 @@
             if (lilyCharIndex < lilyMessage.length) {
                 lilyTitleText.innerHTML = lilyMessage.substring(0, lilyCharIndex + 1);
                 lilyCharIndex++;
-                setTimeout(typeWriterLily, Math.random() * 60 + 40); // Slightly slower for drama
+                setTimeout(typeWriterLily, Math.random() * 60 + 40);
             } else {
                 isLilyTyping = false;
-                // Optionally, hide the cursor when done
                 document.getElementById('lily-cursor').style.animation = 'none';
             }
         }
@@ -622,7 +627,7 @@
                     bangerBtn.style.opacity = '1';
                     bangerBtn.style.transform = 'translateY(0)';
                 }, 50);
-            }, 1500); // Appears 1.5 seconds after reaching the page
+            }, 1500);
             
             // Continue confetti for a few seconds
             const confettiInterval = setInterval(triggerConfetti, 1500);
@@ -654,7 +659,7 @@
             yesBtn.style.transform = `scale(${yesBtnSize})`;
         });
 
-        // NEW "BANGERRRRR" Button Click Handler
+        // "BANGERRRRR" Button Click Handler
         bangerBtn.addEventListener('click', () => {
             page3.style.display = 'none';
             page4.style.display = 'flex';
@@ -663,7 +668,7 @@
             setTimeout(() => {
                 isLilyTyping = true;
                 typeWriterLily();
-            }, 800); // Slight delay for page transition
+            }, 800);
         });
         
         // Confetti function
