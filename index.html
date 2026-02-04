@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>A lil something speciallll</title>
+    <title>Valentine's Day Surprise for Queen</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
     <style>
@@ -248,6 +248,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
+            position: relative; /* Needed for positioning the new button */
         }
 
         .success-container {
@@ -260,6 +261,7 @@
             text-align: center;
             position: relative;
             overflow: hidden;
+            margin-bottom: 30px; /* Space for the new button below */
         }
 
         .success-title {
@@ -281,6 +283,28 @@
             overflow: hidden;
         }
 
+        #banger-btn {
+            background-color: #ff4081; /* Hot pink */
+            color: white;
+            border: none;
+            padding: 18px 35px;
+            font-size: 22px;
+            font-weight: bold;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 25px rgba(255, 64, 129, 0.9);
+            margin-top: 20px;
+            display: none; /* Hidden by default, shown by script */
+            opacity: 0;
+            transform: translateY(15px);
+        }
+
+        #banger-btn:hover {
+            box-shadow: 0 0 35px rgba(255, 64, 129, 1);
+            transform: scale(1.08) translateY(15px);
+        }
+
         .confetti {
             position: fixed;
             width: 100%;
@@ -289,6 +313,53 @@
             left: 0;
             pointer-events: none;
             z-index: 1000;
+        }
+
+        /* Page 4 - Lilies Surprise */
+        #page4 {
+            display: none;
+            background-color: #000; /* Plain black background */
+            width: 100%;
+            min-height: 100vh;
+            padding: 40px 20px 0px 20px; /* Top padding only, bottom is for the image */
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .lily-title-container {
+            text-align: center;
+            margin-bottom: 40px;
+            width: 90%;
+            max-width: 800px;
+        }
+
+        #lily-title-text {
+            font-size: 32px;
+            font-weight: bold;
+            color: #fff;
+            line-height: 1.4;
+            min-height: 100px;
+            white-space: pre-wrap;
+            overflow: hidden;
+        }
+
+        .lily-image-container {
+            width: 100%;
+            position: absolute;
+            bottom: 0; /* Anchors the container to the bottom */
+            left: 0;
+            display: flex;
+            justify-content: center;
+            align-items: flex-end; /* Aligns the image to the bottom of its container */
+        }
+
+        .lily-image {
+            max-width: 100%;
+            max-height: 85vh; /* Prevents the image from getting too tall */
+            width: auto;
+            display: block;
         }
 
         /* Responsive adjustments */
@@ -321,6 +392,16 @@
             #no-btn {
                 position: relative !important;
             }
+            
+            #lily-title-text {
+                font-size: 24px;
+                min-height: 80px;
+            }
+            
+            #banger-btn {
+                font-size: 20px;
+                padding: 15px 25px;
+            }
         }
     </style>
 </head>
@@ -348,7 +429,6 @@
     <div id="page2">
         <div class="valentine-container">
             <div class="meme-container">
-                <!-- YOUR PINTEREST ROSE IMAGE ADDED HERE -->
                 <img src="https://i.pinimg.com/736x/f5/88/1f/f5881f0244a34312efcc58b8004c37c1.jpg" alt="Rose in mouth" class="meme-image" id="meme1">
             </div>
             <div class="question-text">Queen, will you be my Valentine? 👀👀👀👀👀👀👀👀</div>
@@ -366,14 +446,26 @@
             <div class="success-title">Awesome sauce 😼</div>
             <div class="question-text" style="margin-bottom: 10px;">Queen, will you be my Valentine? 👀👀👀👀👀👀👀👀</div>
             <div class="success-meme-container">
-                <!-- YOUR TENOR GIF ADDED HERE -->
                 <img src="https://media1.tenor.com/m/6KZoHoIHQsYAAAAd/flightreacts-freaky.gif" alt="Flightreacts Freaky GIF" class="meme-image" id="meme2">
             </div>
             <div style="margin-top: 20px; font-size: 22px; color: #d81b60; font-weight: bold; font-style: italic;">
                 muchos gracias mamacitaaaaa
             </div>
         </div>
+        <!-- NEW "BANGERRRRR" BUTTON -->
+        <button id="banger-btn">ANOTHER BANGERRRRR (BIG SUPRISEEEE)</button>
         <div class="confetti" id="confetti-container"></div>
+    </div>
+
+    <!-- NEW Page 4: Lilies -->
+    <div id="page4">
+        <div class="lily-title-container">
+            <div id="lily-title-text"></div>
+            <span class="cursor" id="lily-cursor"></span>
+        </div>
+        <div class="lily-image-container">
+            <img src="https://i.pinimg.com/1200x/e9/80/30/e9803061145a060be77d47c09619686b.jpg" alt="Beautiful Lilies" class="lily-image" id="lily-image">
+        </div>
     </div>
 
     <script>
@@ -381,47 +473,60 @@
         const page1 = document.getElementById('page1');
         const page2 = document.getElementById('page2');
         const page3 = document.getElementById('page3');
+        const page4 = document.getElementById('page4');
         const terminalText = document.getElementById('terminal-text');
         const surpriseBtn = document.getElementById('surprise-btn');
         const yesBtn = document.getElementById('yes-btn');
         const noBtn = document.getElementById('no-btn');
         const buttonsContainer = document.getElementById('buttons-container');
         const confettiContainer = document.getElementById('confetti-container');
+        const bangerBtn = document.getElementById('banger-btn'); // New button
+        const lilyTitleText = document.getElementById('lily-title-text'); // Lily page title
         
         // Terminal message
         const message = "Hey Queen...\n\nDo you know what today is?";
+        // Lily page message
+        const lilyMessage = "For you, Lilies, because \"roses are overrated\".";
         
         // Typewriter effect variables
         let charIndex = 0;
         let isTyping = true;
-        
-        // Typewriter function
+        let lilyCharIndex = 0;
+        let isLilyTyping = false;
+
+        // Typewriter function for Page 1
         function typeWriter() {
             if (charIndex < message.length) {
-                // Add the next character
                 terminalText.innerHTML = message.substring(0, charIndex + 1);
                 charIndex++;
-                
-                // Continue typing after a random delay (to simulate natural typing)
                 setTimeout(typeWriter, Math.random() * 50 + 30);
             } else {
-                // Typing is complete
                 isTyping = false;
-                
-                // Show the surprise button with animation
                 setTimeout(() => {
                     surpriseBtn.style.opacity = '1';
                     surpriseBtn.style.transform = 'translateY(0)';
                 }, 500);
             }
         }
-        
-        // Start the typewriter effect
+
+        // Typewriter function for Lily Page (Page 4)
+        function typeWriterLily() {
+            if (lilyCharIndex < lilyMessage.length) {
+                lilyTitleText.innerHTML = lilyMessage.substring(0, lilyCharIndex + 1);
+                lilyCharIndex++;
+                setTimeout(typeWriterLily, Math.random() * 60 + 40); // Slightly slower for drama
+            } else {
+                isLilyTyping = false;
+                // Optionally, hide the cursor when done
+                document.getElementById('lily-cursor').style.animation = 'none';
+            }
+        }
+
+        // Start the initial typewriter effect
         setTimeout(typeWriter, 1000);
         
         // Surprise button click handler
         surpriseBtn.addEventListener('click', () => {
-            // Hide page 1, show page 2
             page1.style.display = 'none';
             page2.style.display = 'flex';
             
@@ -429,7 +534,6 @@
             const containerWidth = buttonsContainer.offsetWidth;
             const buttonWidth = yesBtn.offsetWidth;
             
-            // Yes button on left, No button on right
             yesBtn.style.left = '0px';
             noBtn.style.left = `${containerWidth - buttonWidth}px`;
             noBtn.style.top = '0px';
@@ -442,7 +546,6 @@
         
         // Track mouse movement for the no button
         document.addEventListener('mousemove', (e) => {
-            // Only move the no button if we're on page 2
             if (page2.style.display !== 'flex') return;
             
             const currentTime = Date.now();
@@ -453,102 +556,91 @@
             const mouseX = e.clientX;
             const mouseY = e.clientY;
             
-            // Get the position of the no button relative to container
             const containerX = buttonsContainer.getBoundingClientRect().left;
             const containerY = buttonsContainer.getBoundingClientRect().top;
             
             const noBtnX = parseFloat(noBtn.style.left) || 0;
             const noBtnY = parseFloat(noBtn.style.top) || 0;
             
-            // Calculate actual screen position of no button center
             const noBtnCenterX = containerX + noBtnX + noBtn.offsetWidth / 2;
             const noBtnCenterY = containerY + noBtnY + noBtn.offsetHeight / 2;
             
-            // Calculate distance between cursor and button center
             const distance = Math.sqrt(
                 Math.pow(mouseX - noBtnCenterX, 2) + 
                 Math.pow(mouseY - noBtnCenterY, 2)
             );
             
-            // If cursor is close to the no button (within 100px), move it away
             if (distance < 100) {
-                // Get container dimensions
                 const containerWidth = buttonsContainer.offsetWidth;
                 const containerHeight = buttonsContainer.offsetHeight;
                 const buttonWidth = noBtn.offsetWidth;
                 const buttonHeight = noBtn.offsetHeight;
                 
-                // Calculate direction from cursor to button
                 const dirX = noBtnCenterX - mouseX;
                 const dirY = noBtnCenterY - mouseY;
                 
-                // Normalize the direction vector
                 const length = Math.sqrt(dirX * dirX + dirY * dirY);
                 const normX = dirX / length;
                 const normY = dirY / length;
                 
-                // Move the button aggressively away from cursor
                 let moveDistance = 80;
                 let newX = noBtnX + normX * moveDistance;
                 let newY = noBtnY + normY * moveDistance;
                 
-                // Keep the button within the container
                 newX = Math.max(0, Math.min(newX, containerWidth - buttonWidth));
                 newY = Math.max(0, Math.min(newY, containerHeight - buttonHeight));
                 
-                // If the button would go out of bounds, try a different angle
                 if (newX <= 0 || newX >= containerWidth - buttonWidth || 
                     newY <= 0 || newY >= containerHeight - buttonHeight) {
-                    // Try perpendicular direction
                     newX = noBtnX - normY * moveDistance;
                     newY = noBtnY + normX * moveDistance;
                     
-                    // Keep within bounds
                     newX = Math.max(0, Math.min(newX, containerWidth - buttonWidth));
                     newY = Math.max(0, Math.min(newY, containerHeight - buttonHeight));
                 }
                 
-                // Apply the new position
                 noBtn.style.left = `${newX}px`;
                 noBtn.style.top = `${newY}px`;
                 
-                // Increase the size of the yes button VERY SLIGHTLY
-                yesBtnSize += 0.015; // Very slow growth
+                yesBtnSize += 0.015;
                 yesBtn.style.transform = `scale(${yesBtnSize})`;
             }
         });
         
         // Yes button click handler
         yesBtn.addEventListener('click', () => {
-            // Hide page 2, show page 3
             page2.style.display = 'none';
             page3.style.display = 'flex';
             
             // Trigger confetti effect
             triggerConfetti();
             
+            // Show the new "BANGERRRRR" button after a short delay
+            setTimeout(() => {
+                bangerBtn.style.display = 'block';
+                setTimeout(() => {
+                    bangerBtn.style.opacity = '1';
+                    bangerBtn.style.transform = 'translateY(0)';
+                }, 50);
+            }, 1500); // Appears 1.5 seconds after reaching the page
+            
             // Continue confetti for a few seconds
             const confettiInterval = setInterval(triggerConfetti, 1500);
-            
-            // Stop confetti after 10 seconds
             setTimeout(() => {
                 clearInterval(confettiInterval);
             }, 10000);
         });
         
-        // No button click handler (just in case she manages to click it)
+        // No button click handler
         noBtn.addEventListener('click', () => {
-            // Move the no button far away when clicked
             const containerWidth = buttonsContainer.offsetWidth;
             const containerHeight = buttonsContainer.offsetHeight;
             const buttonWidth = noBtn.offsetWidth;
             const buttonHeight = noBtn.offsetHeight;
             
-            // Current position
             const currentX = parseFloat(noBtn.style.left) || 0;
             const currentY = parseFloat(noBtn.style.top) || 0;
             
-            // Find a position far from current
             let newX, newY;
             do {
                 newX = Math.random() * (containerWidth - buttonWidth);
@@ -558,9 +650,20 @@
             noBtn.style.left = `${newX}px`;
             noBtn.style.top = `${newY}px`;
             
-            // Increase yes button size slightly
-            yesBtnSize += 0.02; // Very small increase
+            yesBtnSize += 0.02;
             yesBtn.style.transform = `scale(${yesBtnSize})`;
+        });
+
+        // NEW "BANGERRRRR" Button Click Handler
+        bangerBtn.addEventListener('click', () => {
+            page3.style.display = 'none';
+            page4.style.display = 'flex';
+            
+            // Start the typewriter effect for the lily message
+            setTimeout(() => {
+                isLilyTyping = true;
+                typeWriterLily();
+            }, 800); // Slight delay for page transition
         });
         
         // Confetti function
@@ -571,7 +674,6 @@
                 origin: { y: 0.6 }
             });
             
-            // Additional confetti from the sides
             setTimeout(() => {
                 confetti({
                     particleCount: 100,
@@ -591,11 +693,9 @@
         
         // Initialize button positions
         window.addEventListener('load', () => {
-            // Set initial positions when page loads
             const containerWidth = buttonsContainer.offsetWidth;
             const buttonWidth = yesBtn.offsetWidth;
             
-            // Position yes button on left, no button on right
             yesBtn.style.left = '0px';
             yesBtn.style.top = '0px';
             yesBtn.style.position = 'relative';
