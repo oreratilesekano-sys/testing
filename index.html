@@ -7,7 +7,7 @@
     <style>
         /* RESET & RADICAL BLANK CANVAS
            Everything is pure black, no margins, no visual clutter.
-           Only the essential text appears in white, centered. */
+           Only the essential text appears in baby pink, centered. */
         * {
             margin: 0;
             padding: 0;
@@ -36,10 +36,10 @@
             -moz-osx-font-smoothing: grayscale;
         }
 
-        /* main text element: white, clean, minimal. 
-           no background, no borders, no shadows unless extremely subtle for crispness */
+        /* main text element: baby pink (#FFB6C1) on absolute black.
+           no background, no borders, no shadows. soft & minimal. */
         .stay-text {
-            color: #ffb6c1;               /* pure white text on absolute black */
+            color: #FFB6C1;               /* baby pink text — soft, calm, elegant */
             text-align: center;
             font-weight: 650;             /* semi-bold but elegant — not too heavy, yet confident */
             font-size: clamp(2.2rem, 8vw, 5rem);
@@ -62,7 +62,7 @@
         /* For accessible focus (keyboard navigation) we add a faint transparent outline
            only when focused — but doesn't disturb the "blank screen" minimalism */
         .stay-text:focus-visible {
-            outline: 1px dotted rgba(255, 255, 255, 0.3);
+            outline: 1px dotted rgba(255, 182, 193, 0.4);  /* subtle baby pink outline to match text */
             border-radius: 2px;
         }
 
@@ -86,14 +86,14 @@
 </head>
 <body>
     <!-- 
-        BLANK SCREEN + WHITE TEXT MESSAGE:
-        "You played. stay on that side."
+        BLANK SCREEN + BABY PINK TEXT MESSAGE:
+        "wishing you the best, it's all love on my side so take care."
         Perfectly centered across all PC monitors (desktop, laptop, wide).
         No icons, no decorations. Only essential words. 
         The design respects the "blank screen" command – background pitch black.
-        Text remains sharp, readable, minimalist.
+        Text appears in soft baby pink (#FFB6C1), minimal and gentle.
     -->
-    <div class="stay-text" aria-label="Now we know your character lmao. You played so stay on that side bih.">
+    <div class="stay-text" aria-label="Now we know your character lmao. You played so stay on that side bih. — gentle words in baby pink">
         wishing you the best, it's all love on my side so take care.
     </div>
 </body>
